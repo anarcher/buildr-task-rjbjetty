@@ -23,7 +23,6 @@ module Buildr
         REQUEST_LOG = "logs/jetty-request.log"
 
         Java.classpath << REQUIRES 
-        Java.classpath << Buildr.artifacts.map(&:to_s).join(File::PATH_SEPARATOR)
         Java.classpath << './target/'
 
 #        print Java.classpath.join("\r\n")
@@ -34,7 +33,7 @@ module Buildr
             end
         end
 
-        attr_accessor :port , :webApp , :contextPath , :requestLog , :cp
+        attr_accessor :port , :webApp , :contextPath , :requestLog 
         
         def initialize() #:nodoc:
             @port = PORT
@@ -45,10 +44,6 @@ module Buildr
 
         def start 
             begin
-                if @cp != nil 
-                    # TODO Selected ClassPath append 
-                end
-
                 Java.rjb do 
                    jetty_wrapper = JettyWrapper.new
                    jetty_wrapper.port = @port

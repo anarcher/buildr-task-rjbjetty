@@ -15,6 +15,10 @@ require 'buildr/jetty'
 $LOAD_PATH << "./../lib/"
 require 'rjbjetty'
 
+LIB=[]
+LIB << "org.springframework:spring:2.5.5:jar"
+Java.classpath << LIB
+
 desc "The Tmp project"
 define "tmp" do
 
@@ -23,6 +27,5 @@ define "tmp" do
   manifest["Implementation-Vendor"] = COPYRIGHT
 
   rjbjetty.port = 9191 
-  rjbjetty.cp = ["./","../"] 
 
 end
