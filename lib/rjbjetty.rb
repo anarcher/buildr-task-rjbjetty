@@ -22,17 +22,19 @@ module Buildr
         CONTEXTPATH = "/"
         REQUEST_LOG = "logs/jetty-request.log"
 
+        Java.classpath << REQUIRES 
+        Java.classpath << Buildr.artifacts.map(&:to_s).join(File::PATH_SEPARATOR)
+        Java.classpath << './target/'
+
+#        print Java.classpath.join("\r\n")
+
         class << self
             def instance()
                 @instance ||= RjbJetty.new
             end
         end
 
-        Java.rjb.onload do 
-            Java.rjb.classpath << REQUIRES
-        end
-
-        attr_accessor :port , :webApp , :contextPath , :requestLog
+        attr_accessor :port , :webApp , :contextPath , :requestLog , :cp
         
         def initialize() #:nodoc:
             @port = PORT
@@ -43,6 +45,10 @@ module Buildr
 
         def start 
             begin
+                if @cp != nil 
+                    # TODO Selected ClassPath append 
+                end
+
                 Java.rjb do 
                    jetty_wrapper = JettyWrapper.new
                    jetty_wrapper.port = @port
@@ -64,6 +70,11 @@ module Buildr
     namespace "rjbjetty" do
         desc "rjb jetty starting."
         task("start") { RjbJetty.instance.start }
+    end
+
+    namespace "rj" do 
+        desc "rjb-jetty staring."
+        task("s") { RjbJetty.instance.start }
     end
 
     def rjbjetty()

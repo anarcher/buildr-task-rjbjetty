@@ -22,6 +22,7 @@ define "tmp" do
   project.group = GROUP
   manifest["Implementation-Vendor"] = COPYRIGHT
 
-  rjbjetty.port = 8181
+  rjbjetty.port = 9191 
+  rjbjetty.cp = ["./","../"] 
 
 end
