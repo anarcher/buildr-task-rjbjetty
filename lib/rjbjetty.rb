@@ -23,7 +23,7 @@ module Buildr
         REQUEST_LOG = "logs/jetty-request.log"
 
         Java.classpath << REQUIRES 
-        Java.classpath << './target/'
+        Java.classpath << './target/classes/'
 
 #        print Java.classpath.join("\r\n")
 
